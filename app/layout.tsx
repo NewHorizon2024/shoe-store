@@ -1,6 +1,13 @@
+import HeaderLayout from "@/layouts/HeaderLayout";
+import MacroLayout from "@/layouts/MacroLayout";
+import SectionLayout from "@/layouts/SectionLayout";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import Header from "./_components/Header";
+import TopNav from "./_components/TopNav";
 import "./globals.css";
+import Container from "@/layouts/Container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +34,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Container>
+          <TopNav />
+          <HeaderLayout>
+            <Header />
+          </HeaderLayout>
+          <MacroLayout>
+            <main>
+              <SectionLayout>{children}</SectionLayout>
+            </main>
+          </MacroLayout>
+        </Container>
       </body>
     </html>
   );
