@@ -6,5 +6,6 @@ declare namespace NodeJS {
     POSTGRES_PASSWORD: string;
     POSTGRES_DATABASE: string;
     NEXT_PUBLIC_APP_ENV: "development" | "staging" | "production";
+    JWT_SECRET: string;
   }
 }

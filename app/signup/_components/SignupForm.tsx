@@ -1,8 +1,8 @@
 "use client";
 
 import { CREATE_USER } from "@/app/api/routes";
-import type { LoginForm } from "@/models/models";
-import type { LoginActionResponse } from "@/models/types";
+import type { SignupForm } from "@/models/models";
+import type { SignupResponse  } from "@/models/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
@@ -36,9 +36,9 @@ export default function SignupForm() {
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["CREATE_USER"],
-    mutationFn: async (payload: LoginForm) => {
+    mutationFn: async (payload: SignupForm) => {
       const response = await axios.post(CREATE_USER, payload);
-      const result = response.data as LoginActionResponse;
+      const result = response.data as SignupResponse ;
       return result;
     },
   });

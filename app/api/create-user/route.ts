@@ -1,4 +1,4 @@
-import type { LoginForm } from "@/models/models";
+import type { SignupForm } from "@/models/models";
 import bcrypt from "bcrypt";
 import { type NextRequest, NextResponse } from "next/server";
 import { DatabaseError } from "pg";
@@ -7,7 +7,7 @@ import pool from "@/lib/db/db-config";
 import { insertUserQuery } from "@/lib/db/queries";
 
 export async function POST(request: NextRequest) {
-  const payload = (await request.json()) as Promise<LoginForm>;
+  const payload = (await request.json()) as Promise<SignupForm>;
   const values = Object.values(payload);
   const password = values[3];
   const hashedPassword = await bcrypt.hash(password, 10);
