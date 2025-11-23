@@ -3,3 +3,5 @@ export const insertUserQuery = `
     VALUES ($1, $2, $3, $4)
     RETURNING id;
   `;
+
+export const getAllProducts = `SELECT * FROM public.products ORDER BY id ASC`;
