@@ -88,7 +88,7 @@ export default function LoginForm() {
           <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
         )}
       </div>
-      <Button disabled={isPending} type="submit" className="mt-4">
+      <Button disabled={isPending} type="submit" className="mt-4 cursor-pointer">
         Login
         {isPending && <IconLoader2 className="mt-1 rotate-icon" />}
       </Button>
