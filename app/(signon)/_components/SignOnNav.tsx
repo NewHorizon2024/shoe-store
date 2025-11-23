@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 const activePath = "text-gray-400 cursor-default";
 const nonActivePath = "text-black cursor-pointer";
 
-export default function TopNav() {
+export default function SignOnNav() {
   const pathName = usePathname();
   return (
     <nav className="flex flex-row-reverse bg-gray-100 h-fit py-2 layout font-[nunito-light]">
