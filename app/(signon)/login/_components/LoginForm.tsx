@@ -3,6 +3,7 @@
 import type { LoginForm } from "@/models/models";
 import type { LoginResponse } from "@/models/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { setCookie } from "cookies-next";
@@ -13,7 +14,6 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { IconLoader2 } from "@tabler/icons-react";
 
 const schema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -52,6 +52,7 @@ export default function LoginForm() {
         }
         if (response.success && response.token) {
           setCookie("token", response.token);
+          setCookie("userId", response.userId);
           router.push("/");
         }
       })
@@ -88,7 +89,11 @@ export default function LoginForm() {
           <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
         )}
       </div>
-      <Button disabled={isPending} type="submit" className="mt-4 cursor-pointer">
+      <Button
+        disabled={isPending}
+        type="submit"
+        className="mt-4 cursor-pointer"
+      >
         Login
         {isPending && <IconLoader2 className="mt-1 rotate-icon" />}
       </Button>

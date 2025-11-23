@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       },
     );
 
-    return NextResponse.json({ success: true, token });
+    return NextResponse.json({ success: true, userId: user.id, token });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
