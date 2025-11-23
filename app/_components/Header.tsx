@@ -1,13 +1,17 @@
 "use server";
 
-import HeaderLogo from "./HeaderLogo";
-import Nav from "./Nav";
+import { type ReactNode } from "react";
 
-export default async function Header() {
+import HeaderLogo from "./HeaderLogo";
+
+type HeaderProps = Readonly<{
+  productNav?: ReactNode;
+}>;
+export default async function Header({ productNav }: HeaderProps) {
   return (
     <div className="flex justify-between items-center">
       <HeaderLogo />
-      <Nav />
+      {productNav}
       <div>Control</div>
     </div>
   );

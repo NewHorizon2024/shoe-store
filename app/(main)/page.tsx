@@ -1,9 +1,11 @@
 "use server";
 
+import Banner from "./_components/Banner";
+
 export default async function Home() {
   return (
     <div>
-      <h4>Main page</h4>
+      <Banner />
     </div>
   );
 }
