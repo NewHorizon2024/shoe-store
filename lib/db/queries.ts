@@ -5,3 +5,8 @@ export const insertUserQuery = `
   `;
 
 export const getAllProducts = `SELECT * FROM public.products ORDER BY id ASC`;
+
+export const getProductDetails = `SELECT *
+FROM products
+WHERE LOWER(title) = LOWER($1)
+`;

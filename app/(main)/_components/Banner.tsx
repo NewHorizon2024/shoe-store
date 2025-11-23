@@ -1,8 +1,8 @@
-"use client";
+"use server";
 
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export default function Banner() {
+export default async function Banner() {
   return (
     <div className="relative w-full h-[600px] overflow-hidden rounded-md">
       <iframe
@@ -15,7 +15,9 @@ export default function Banner() {
 
       <div className="absolute inset-0 flex flex-col items-center justify-end mb-10 text-white">
         <h1 className="text-5xl font-[nunito-bold]">Step Into Style</h1>
-        <Button className="mt-6 px-8 py-3 bg-black rounded-lg">Shop Now</Button>
+        <Link href="/products" className="mt-6 px-8 py-3 bg-black rounded-lg">
+          Shop Now
+        </Link>
       </div>
     </div>
   );
