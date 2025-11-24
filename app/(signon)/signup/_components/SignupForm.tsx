@@ -37,7 +37,7 @@ export default function SignupForm() {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["CREATE_USER"],
     mutationFn: async (payload: SignupForm) => {
-      const response = await axios.post(CREATE_USER, payload);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${CREATE_USER}`, payload);
       const result = response.data as SignupResponse ;
       return result;
     },
