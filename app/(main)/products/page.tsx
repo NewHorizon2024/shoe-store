@@ -18,8 +18,6 @@ export default function Home() {
     },
   });
 
-  console.log(data);
-
   return (
     <div className="flex flex-col gap-4">
       <h1 className="pl-40 pt-10">Current trends</h1>
