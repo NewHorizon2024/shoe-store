@@ -1,11 +1,18 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 
 type SummaryProps = Readonly<{
   total: number;
 }>;
 export default function Summary({ total }: SummaryProps) {
+  const router = useRouter();
+
+  function handleCheckoutNavigation() {
+    router.push("/checkout");
+  }
 
   return (
     <div className="flex flex-col">
@@ -16,10 +23,21 @@ export default function Summary({ total }: SummaryProps) {
       </div>
       <div className="flex justify-between">
         <p>Amount</p>
-        {total > 0 && <p>{"$"}{total}</p>}
+        {total > 0 && (
+          <p>
+            {"$"}
+            {total.toFixed(2)}
+          </p>
+        )}
         {total <= 0 && <p>-</p>}
       </div>
-      <Button disabled={total <=0} className="cursor-pointer mt-10">Proceed to checkout</Button>
+      <Button
+        onClick={handleCheckoutNavigation}
+        disabled={total <= 0}
+        className="cursor-pointer mt-10"
+      >
+        Proceed to checkout
+      </Button>
     </div>
   );
 }

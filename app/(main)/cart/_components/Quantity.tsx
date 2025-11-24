@@ -19,11 +19,13 @@ type QuantityProps = Readonly<{
   quantity: number;
   cartQuantity: number;
   productId: number;
+  isDisabled: boolean;
 }>;
 export default function Quantity({
   quantity,
   cartQuantity,
   productId,
+  isDisabled,
 }: QuantityProps) {
   const [currentQuantity, setCurrentQuantity] = useState<number>(cartQuantity);
   const userId = Number(getCookie("userId"));
@@ -41,7 +43,7 @@ export default function Quantity({
       console.error(error);
       toast.error("Failed to update cart, try again later!");
     },
-    onSuccess: () => refetch(),
+    onSuccess: async () => await refetch(),
   });
 
   const { mutate: mutateDelete, isPending } = useMutation({
@@ -54,7 +56,7 @@ export default function Quantity({
       console.error(error);
       toast.error("Failed to update cart, try again later!");
     },
-    onSuccess: () => refetch(),
+    onSuccess: async () => await refetch(),
   });
 
   function handleClick(action: "add" | "sub") {
@@ -81,12 +83,16 @@ export default function Quantity({
           variant="ghost"
           className={clsx("cursor-pointer")}
         >
-          {isPending ? <IconLoader2 className={clsx(isPending && "rotate-icon")} /> : <IconTrash />}
+          {isPending ? (
+            <IconLoader2 className={clsx(isPending && "rotate-icon")} />
+          ) : (
+            <IconTrash />
+          )}
         </Button>
       )}
       {currentQuantity > 1 && (
         <Button
-          disabled={currentQuantity === 0}
+          disabled={currentQuantity === 0 || isDisabled}
           variant="ghost"
           className="cursor-pointer "
           onClick={() => handleClick("sub")}
@@ -97,7 +103,7 @@ export default function Quantity({
 
       <span>{currentQuantity}</span>
       <Button
-        disabled={currentQuantity === quantity}
+        disabled={currentQuantity === quantity || isDisabled}
         className="cursor-pointer"
         variant="ghost"
         onClick={() => handleClick("add")}

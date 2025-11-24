@@ -8,5 +8,9 @@ declare namespace NodeJS {
     NEXT_PUBLIC_APP_ENV: "development" | "staging" | "production";
     NEXT_PUBLIC_API_URL: string;
     JWT_SECRET: string;
+    GOOGLE_CLIENT_ID:string;
+    GOOGLE_CLIENT_SECRET:string;
+    NEXTAUTH_URL:string;
+    NEXTAUTH_SECRET:string;
   }
 }
