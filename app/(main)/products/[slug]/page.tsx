@@ -28,27 +28,41 @@ export default function Slug() {
     staleTime: CACHE_ONE_HOUR,
   });
 
+  console.log("data", data);
   if (!data?.id) return null;
   return (
-    <div className="flex justify-center px-4">
-      <div className="w-full max-w-5xl flex flex-col md:flex-row md:space-x-8">
-        <div className="flex-1 flex justify-center items-center bg-gray-100 rounded p-4">
-          <Image
-            width={200}
-            height={200}
-            src={isFetching || !data?.image_url ? holder : data?.image_url}
-            alt="Product"
-            className="w-full max-w-sm object-contain"
-          />
-        </div>
-
-        <div className="flex-1 flex flex-col space-y-4 p-4">
-          <h1 className="text-2xl font-bold">{data?.title}</h1>
-          <p className="text-gray-600">{data?.description}</p>
-          <ProductPrice price={data?.price} />
-          <AddToCart productId={data.id} />
-        </div>
-      </div>
+<div className="flex flex-col items-center px-4 pb-20">
+  {/* Middle content */}
+  <div className="w-full max-w-5xl flex flex-col md:flex-row md:gap-8 items-center justify-center flex-1">
+    {/* Left side: Image */}
+    <div className="flex-1 flex justify-center items-center bg-gray-100 rounded p-4">
+      <Image
+        width={200}
+        height={200}
+        src={isFetching || !data?.image_url ? holder : data?.image_url}
+        alt="Product"
+        className="w-full max-w-sm object-contain"
+      />
     </div>
+
+    {/* Right side: Product info */}
+    <div className="flex-1 flex flex-col space-y-4 p-4">
+      <h1 className="text-2xl font-bold">{data?.title}</h1>
+      <p className="text-gray-600">{data?.description}</p>
+      <ProductPrice price={data?.price} />
+      <AddToCart productId={data.id} />
+    </div>
+  </div>
+
+  {/* Video always at bottom */}
+  <iframe
+    className="w-full min-h-[500px] mt-6"
+    src={`${data?.video_url}?controls=1`}
+    title="YouTube video banner"
+    allow="autoplay; encrypted-media"
+    allowFullScreen
+  ></iframe>
+</div>
+
   );
 }
