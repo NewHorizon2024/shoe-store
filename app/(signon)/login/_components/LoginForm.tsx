@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -22,7 +22,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function LoginForm() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -51,17 +50,15 @@ export default function LoginForm() {
         }
         if (response.success && response.token) {
           setTimeout(() => {
-            router.push("/");
+            redirect("/");
           }, 1000);
         }
-        router.replace("/");
-        router.push("/");
       })
       .catch((error) => {
         console.error(error);
         toast.error("Login Failed, please try again later!");
       })
-      .finally(() => router.replace("/"));
+      .finally(() => redirect("/"));
   }
 
   return (
