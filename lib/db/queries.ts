@@ -4,6 +4,12 @@ export const insertUserQuery = `
     RETURNING id;
   `;
 
+  export const insertGoogleUser = `
+    INSERT INTO users (first_name, last_name, email)
+    VALUES ($1, $2, $3)
+    RETURNING id;
+  `;
+
 export const getAllProducts = `SELECT * FROM public.products ORDER BY id ASC`;
 
 export const getProductDetails = `SELECT *
@@ -67,4 +73,8 @@ WHERE id = ANY($1::int[]);
 export const deleteUserCart = `
 DELETE FROM public.carts
 WHERE user_id = $1;
+`;
+export const getUserByEmail = `
+  SELECT * FROM public.users
+  WHERE email = $1
 `;

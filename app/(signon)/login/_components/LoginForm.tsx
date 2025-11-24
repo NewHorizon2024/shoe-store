@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+
+import { useEffect } from "react";
 
 import type { LoginForm } from "@/models/models";
 import type { LoginResponse } from "@/models/types";
@@ -6,6 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { setCookie } from "cookies-next";
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -22,6 +28,45 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function LoginForm() {
+  const { data, status } = useSession();
+  const router = useRouter();
+
+  const { mutateAsync: googleMutate } = useMutation({
+    mutationKey: ["GOOGLE_USER"],
+    mutationFn: async (payload: {
+      name: string;
+      email: string;
+      token: string;
+    }) => {
+      const response = await axios.post("/api/auth-google", {
+        name: payload.name,
+        email: payload.email,
+        token: payload.token,
+      });
+
+      return response.data;
+    },
+    onSuccess: () => {
+      setCookie("token", data?.accessToken);
+    },
+  });
+
+  useEffect(() => {
+    if (
+      status === "authenticated" &&
+      data?.user &&
+      data.user.name &&
+      data.user.email &&
+      data.accessToken
+    ) {
+      googleMutate({
+        name: data.user?.name,
+        email: data?.user.email,
+        token: data.accessToken,
+      }).then(() => router.push("/"));
+    }
+  }, [status]);
+
   const {
     register,
     handleSubmit,
@@ -29,7 +74,7 @@ export default function LoginForm() {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-  const router = useRouter();
+
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["LOGIN_USER"],
     mutationFn: async (payload: LoginForm) => {
@@ -67,40 +112,54 @@ export default function LoginForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full max-w-md mx-auto"
-    >
-      <div>
-        <Input
-          {...register("email")}
-          type="email"
-          placeholder="Email"
-          required
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )}
-      </div>
-      <div>
-        <Input
-          {...register("password")}
-          type="password"
-          placeholder="Password"
-          required
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-        )}
-      </div>
-      <Button
-        disabled={isPending}
-        type="submit"
-        className="mt-4 cursor-pointer"
+    <div>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-full max-w-md mx-auto"
       >
-        Login
-        {isPending && <IconLoader2 className="mt-1 rotate-icon" />}
+        <div>
+          <Input
+            {...register("email")}
+            type="email"
+            placeholder="Email"
+            required
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
+        </div>
+        <div>
+          <Input
+            {...register("password")}
+            type="password"
+            placeholder="Password"
+            required
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col items-center">
+          <Button
+            disabled={isPending || status === "loading"}
+            type="submit"
+            className="cursor-pointer w-full"
+          >
+            Login
+            {isPending && <IconLoader2 className="mt-1 rotate-icon" />}
+          </Button>
+        </div>
+      </form>
+
+      <Button
+        disabled={isPending || status === "loading"}
+        className="cursor-pointer w-full mt-4"
+        onClick={() => signIn("google")}
+      >
+        Sign in with google
       </Button>
-    </form>
+    </div>
   );
 }

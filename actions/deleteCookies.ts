@@ -6,4 +6,5 @@ export async function deleteCookie() {
   const cookieStore = await cookies();
   cookieStore.delete("token");
   cookieStore.delete("userId");
+  cookieStore.delete("next-auth.session-token");
 }
