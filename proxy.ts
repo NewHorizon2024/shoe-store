@@ -42,6 +42,7 @@ export function proxy(request: NextRequest) {
     if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
+
     return NextResponse.next();
   }
 
@@ -55,6 +56,8 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
+    "/login",
+    "/signup",
     "/cart",
     "/products/:path*",
     "/checkout",
