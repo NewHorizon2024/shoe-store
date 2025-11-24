@@ -53,8 +53,9 @@ export default function LoginForm() {
         if (response.success && response.token) {
           setCookie("token", response.token);
           setCookie("userId", response.userId);
-         router.replace("/");
-
+          setTimeout(() => {
+            router.push("/");
+          }, 1000);
         }
       })
       .catch((error) => {
