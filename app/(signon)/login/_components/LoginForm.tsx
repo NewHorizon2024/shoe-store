@@ -35,7 +35,7 @@ export default function LoginForm() {
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["LOGIN_USER"],
     mutationFn: async (payload: LoginForm) => {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user-login`, payload);
+      const response = await axios.post(`/api/user-login`, payload);
       const result = response.data as LoginResponse;
       return result;
     },
