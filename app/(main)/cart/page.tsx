@@ -37,7 +37,7 @@ export default function CartPage() {
 
   return (
     <div className="flex justify-center px-4">
-      <div className="w-full max-w-5xl flex flex-col lg:flex-row lg:divide-x lg:space-x-0">
+      <div className="w-full max-w-5xl flex flex-col lg:flex-row lg:divide-x lg:space-x-0 lg:min-w-[60%]">
         <div className="flex-1 flex flex-col gap-4 rounded p-4 lg:pr-8">
           <h3>Shopping basket</h3>
           {!data?.cart.length && (
