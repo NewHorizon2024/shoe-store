@@ -10,7 +10,9 @@ export default function Home() {
   const { data } = useQuery({
     queryKey: ["LIST_PRODUCTS"],
     queryFn: async () => {
-      const result = await axios.get("/api/get-list-products");
+      const result = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/get-list-products`,
+      );
       const response = result.data as { products: Product[] };
       return response;
     },

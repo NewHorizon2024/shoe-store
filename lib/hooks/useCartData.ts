@@ -9,7 +9,7 @@ export default function useCartData(userId: number) {
   return useQuery<{ cart: Cart[] }>({
     queryKey: [GET_CART_DATA],
     queryFn: async () => {
-      const response = await axios.get(`${GET_CART}?userId=${userId}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${GET_CART}?userId=${userId}`);
       return response.data;
     },
     enabled: !!userId,

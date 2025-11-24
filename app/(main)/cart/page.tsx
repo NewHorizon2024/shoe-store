@@ -19,7 +19,7 @@ export default function CartPage() {
   const { data: productsId } = useQuery({
     queryKey: ["ALL_CART_PRODUCTS", productIds],
     queryFn: async () => {
-      const response = await axios.post(GET_ALL_PRODUCT_IDS, productIds);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${GET_ALL_PRODUCT_IDS}`, productIds);
       return response.data;
     },
     enabled: !!productIds?.length,

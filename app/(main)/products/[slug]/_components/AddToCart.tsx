@@ -25,7 +25,7 @@ export default function AddToCart({ productId }: AddToCartProps) {
       action: "add" | "sub";
       payload: CartPayLoad;
     }) => {
-      const response = axios.post(UPDATE_CART, payload);
+      const response = axios.post(`${process.env.NEXT_PUBLIC_API_URL}${UPDATE_CART}`, payload);
       return (await response).data;
     },
   });

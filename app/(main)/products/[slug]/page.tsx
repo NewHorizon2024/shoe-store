@@ -21,7 +21,7 @@ export default function Slug() {
   const { data, isFetching } = useQuery({
     queryKey: ["PRODUCT_DETAILS", slug],
     queryFn: async () => {
-      const response = await axios.get(`${GET_PRODUCT_DETAILS}?title=${slug}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}${GET_PRODUCT_DETAILS}?title=${slug}`);
       return response.data as Product | null;
     },
     enabled: !!slug,

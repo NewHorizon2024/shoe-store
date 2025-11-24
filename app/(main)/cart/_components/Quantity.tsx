@@ -34,7 +34,7 @@ export default function Quantity({
       action: "add" | "sub";
       payload: CartPayLoad;
     }) => {
-      const response = await axios.post(UPDATE_CART, payload);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}${UPDATE_CART}`, payload);
       return response.data;
     },
     onError: (error) => {
