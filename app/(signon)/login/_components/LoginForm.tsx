@@ -57,11 +57,12 @@ export default function LoginForm() {
             router.push("/");
           }, 1000);
         }
+         router.replace("/");
       })
       .catch((error) => {
         console.error(error);
         toast.error("Login Failed, please try again later!");
-      });
+      }).finally(() =>  router.replace("/"))
   }
 
   return (
