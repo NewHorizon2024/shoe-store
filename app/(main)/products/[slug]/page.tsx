@@ -30,11 +30,9 @@ export default function Slug() {
     staleTime: CACHE_ONE_HOUR,
   });
 
-  console.log("data", data);
   if (!data?.id) return null;
   return (
     <div className="flex flex-col items-center px-4 pb-20">
-      {/* Middle content */}
       <div className="w-full max-w-5xl flex flex-col md:flex-row md:gap-8 items-center justify-center flex-1">
         <div className="flex-1 flex justify-center items-center bg-gray-100 rounded p-4">
           <Image
