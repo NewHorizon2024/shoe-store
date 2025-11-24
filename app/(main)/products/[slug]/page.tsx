@@ -28,10 +28,12 @@ export default function Slug() {
     staleTime: CACHE_ONE_HOUR,
   });
 
+  console.log("data", data);
   if (!data?.id) return null;
   return (
-    <div className="flex justify-center px-4">
-      <div className="w-full max-w-5xl flex flex-col md:flex-row md:space-x-8">
+    <div className="flex flex-col items-center px-4 pb-20">
+      {/* Middle content */}
+      <div className="w-full max-w-5xl flex flex-col md:flex-row md:gap-8 items-center justify-center flex-1">
         <div className="flex-1 flex justify-center items-center bg-gray-100 rounded p-4">
           <Image
             width={200}
@@ -49,6 +51,14 @@ export default function Slug() {
           <AddToCart productId={data.id} />
         </div>
       </div>
+
+      <iframe
+        className="w-full min-h-[500px] mt-6"
+        src={`${data?.video_url}?controls=1`}
+        title="YouTube video banner"
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+      ></iframe>
     </div>
   );
 }
