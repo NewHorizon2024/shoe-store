@@ -68,7 +68,10 @@ export default function LoginForm() {
         name: data.user.name,
         email: data.user.email,
         token: data.accessToken,
-      }).then(() => router.push("/"));
+      }).then(() => {
+        router.push("/");
+        window.location.href = "/";
+      });
     }
   }, [status, data]);
 
@@ -88,9 +91,9 @@ export default function LoginForm() {
       return result;
     },
     onSuccess: () => {
-      router.push("/")
-      console.log("success")
-    }
+      router.push("/");
+      window.location.href = "/";
+    },
   });
 
   function onSubmit(data: LoginForm) {
@@ -109,7 +112,7 @@ export default function LoginForm() {
 
         if (response.id) {
           router.push("/");
-           console.log("response", response)
+          console.log("response", response);
         }
       })
       .catch((error) => {
