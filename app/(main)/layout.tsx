@@ -4,12 +4,13 @@ import MacroLayout from "@/layouts/MacroLayout";
 import SectionLayout from "@/layouts/SectionLayout";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 
 import Header from "../_components/Header";
 import "../globals.css";
 import MainNav from "./_components/MainNav";
-import ProductNav from "./_components/ProductNav";
 import ProductCart from "./_components/ProductCart";
+import AnalyticsProvider from "@/lib/google-analytics/AnalyticsProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,13 +34,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-QWXZ0HN734"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QWXZ0HN734');
+  `}
+        </Script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Container>
           <MainNav />
           <HeaderLayout>
-            <Header productNav={<ProductNav />} productCart={<ProductCart />} />
+            <Header productCart={<ProductCart />} />
           </HeaderLayout>
           <MacroLayout>
             <main>
@@ -47,6 +63,7 @@ export default function RootLayout({
             </main>
           </MacroLayout>
         </Container>
+        <AnalyticsProvider />
       </body>
     </html>
   );
