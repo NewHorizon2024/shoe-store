@@ -21,7 +21,10 @@ export default function AddToCart({ productId }: AddToCartProps) {
   const { refetch } = useCartData(userId);
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["ADD_TO_CART"],
-    mutationFn: async (payload: CartPayLoad) => {
+    mutationFn: async (payload: {
+      action: "add" | "sub";
+      payload: CartPayLoad;
+    }) => {
       const response = axios.post(UPDATE_CART, payload);
       return (await response).data;
     },
@@ -29,7 +32,10 @@ export default function AddToCart({ productId }: AddToCartProps) {
 
   async function handleAddtoCart() {
     try {
-      await mutateAsync({ userId, productId, quantity: 1 });
+      await mutateAsync({
+        action: "add",
+        payload: { userId, productId, quantity: 1 },
+      });
       toast.success("Your cart has been updated successfully!");
       refetch();
     } catch (error) {

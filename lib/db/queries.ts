@@ -29,10 +29,16 @@ VALUES ($1, $2, $3)
 RETURNING *;
 `;
 
-export const updateProductQuantity = `UPDATE cart_items
+export const updateProductQuantity_ADD = `UPDATE cart_items
 SET quantity = quantity + 1
 WHERE cart_id = $1 AND product_id = $2;
 `;
+
+export const updateProductQuantity_SUB = `UPDATE cart_items
+SET quantity = quantity - 1
+WHERE cart_id = $1 AND product_id = $2;
+`;
+
 
 export const getUserCartItems = `
 SELECT * FROM public.cart_items

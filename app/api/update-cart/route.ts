@@ -6,14 +6,21 @@ import {
   createUserCart,
   getProductFromCartItems,
   getUserCart,
-  updateProductQuantity,
+  updateProductQuantity_ADD,
+  updateProductQuantity_SUB,
   updateUSerCartItems,
 } from "@/lib/db/queries";
 
 export async function POST(request: NextRequest) {
   try {
     const payload = await request.json();
-    const { userId, productId, quantity } = payload as CartPayLoad;
+    const {
+      payload: { userId, productId, quantity },
+      action,
+    } = payload as {
+      action: "add" | "sub";
+      payload: CartPayLoad;
+    };
     let userCart = await pool.query(getUserCart, [userId]);
 
     if (userCart.rowCount === 0) {
@@ -33,13 +40,11 @@ export async function POST(request: NextRequest) {
         productId,
         quantity,
       ]);
-
-      console.log(updatedCart )
     } else {
-      updatedCart = await pool.query(updateProductQuantity, [
-        cartId,
-        productId,
-      ]);
+      updatedCart =
+        action === "add"
+          ? await pool.query(updateProductQuantity_ADD, [cartId, productId])
+          : pool.query(updateProductQuantity_SUB, [cartId, productId]);
     }
 
     return NextResponse.json(updatedCart, { status: 201 });

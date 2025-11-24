@@ -4,10 +4,11 @@ import { GET_PRODUCT_DETAILS_BY_ID } from "@/app/api/routes";
 import placeholder from "@/public/assets/images/holder.png";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 import ProductPrice from "../../_components/ProductPrice";
+import Quantity from "./Quantity";
 
 type ProductItemProps = Readonly<{
   productId: number;
@@ -16,7 +17,7 @@ type ProductItemProps = Readonly<{
 
 export default function ProductItem({ productId, quantity }: ProductItemProps) {
   const { data, isFetching } = useQuery({
-    queryKey: ["PRODUCT_DETAILS"],
+    queryKey: ["PRODUCT_DETAILS", productId],
     queryFn: async () => {
       const response = await axios.get(
         `${GET_PRODUCT_DETAILS_BY_ID}?productId=${productId}`,
@@ -36,10 +37,15 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
             height={150}
             src={isFetching ? placeholder : data?.image_url}
           />
-          <p>{quantity}</p>
+          <Quantity quantity={data?.quantity} cartQuantity= {quantity} productId={productId} />
         </div>
         <div className="flex flex-col">
-          <Link href={`/products/${data?.title}`} className="nunito-bold font-bold hover:text-zinc-500">{data?.title}</Link>
+          <Link
+            href={`/products/${data?.title}`}
+            className="nunito-bold font-bold hover:text-zinc-500"
+          >
+            {data?.title}
+          </Link>
           <p className="text-zinc-700">Men&apos;s shoes</p>
         </div>
       </div>
