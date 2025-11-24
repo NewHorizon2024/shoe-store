@@ -1,26 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { IconProgressCheck } from "@tabler/icons-react";
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-import useCartData from "@/lib/hooks/useCartData";
-
 export default function OrderConfirmationPage() {
   const router = useRouter();
-  const userId = getCookie("userId") as unknown as number;
-  const { data } = useCartData(userId);
 
-  useEffect(() => {
-    if (!data?.cart) router.push("/");
-  }, [data, router]);
-
-  if (!data?.cart) return null;
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-neutral-900 px-4">
       <div className="max-w-lg w-full bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-8 text-center">

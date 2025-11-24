@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -51,8 +50,6 @@ export default function LoginForm() {
           toast.error("The email or password you entered is incorrect.");
         }
         if (response.success && response.token) {
-          setCookie("token", response.token);
-          setCookie("userId", response.userId);
           setTimeout(() => {
             router.push("/");
           }, 1000);
