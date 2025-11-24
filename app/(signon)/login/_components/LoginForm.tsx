@@ -60,7 +60,7 @@ export default function LoginForm() {
             router.push("/");
           }, 1000);
         }
-        console.log("REACH HERE")
+        console.log("REACH HERE", response)
       })
       .catch((error) => {
         console.error(error);
