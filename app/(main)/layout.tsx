@@ -9,6 +9,7 @@ import Header from "../_components/Header";
 import "../globals.css";
 import MainNav from "./_components/MainNav";
 import ProductNav from "./_components/ProductNav";
+import ProductCart from "./_components/ProductCart";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,7 @@ export default function RootLayout({
         <Container>
           <MainNav />
           <HeaderLayout>
-            <Header productNav={<ProductNav />} />
+            <Header productNav={<ProductNav />} productCart={<ProductCart />} />
           </HeaderLayout>
           <MacroLayout>
             <main>

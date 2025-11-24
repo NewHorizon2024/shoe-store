@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { GET_PRODUCT_DETAILS } from "@/app/api/routes";
 import { Product } from "@/models/models";
 import holder from "@/public/assets/images/holder.png";
@@ -11,6 +9,9 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 
 import ProductPrice from "../../_components/ProductPrice";
+import AddToCart from "./_components/AddToCart";
+
+const CACHE_ONE_HOUR = 1000 * 60 * 60;
 
 export default function Slug() {
   const params = useParams();
@@ -24,17 +25,13 @@ export default function Slug() {
       return response.data as Product | null;
     },
     enabled: !!slug,
-    staleTime: 1000 * 60 * 60,
+    staleTime: CACHE_ONE_HOUR,
   });
 
-  useEffect(() => console.log(data), [data]);
-
-  if (!data?.id) return null
+  if (!data?.id) return null;
   return (
     <div className="flex justify-center px-4">
-      {/* Wrapper with max width */}
       <div className="w-full max-w-5xl flex flex-col md:flex-row md:space-x-8">
-        {/* Left box: product image */}
         <div className="flex-1 flex justify-center items-center bg-gray-100 rounded p-4">
           <Image
             width={200}
@@ -45,11 +42,11 @@ export default function Slug() {
           />
         </div>
 
-        {/* Right box: product details */}
         <div className="flex-1 flex flex-col space-y-4 p-4">
           <h1 className="text-2xl font-bold">{data?.title}</h1>
           <p className="text-gray-600">{data?.description}</p>
           <ProductPrice price={data?.price} />
+          <AddToCart productId={data.id} />
         </div>
       </div>
     </div>

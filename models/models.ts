@@ -16,3 +16,16 @@ export type Product = Readonly<{
   image_url: string;
   video_url: string;
 }>;
+
+export type CartPayLoad = Readonly<{
+  userId: number;
+  productId: number;
+  quantity: number;
+}>;
+
+export type Cart = Readonly<{
+  id: number;
+  cart_id: number;
+  product_id: number;
+  quantity: number;
+}>;

@@ -6,13 +6,14 @@ import HeaderLogo from "./HeaderLogo";
 
 type HeaderProps = Readonly<{
   productNav?: ReactNode;
+  productCart?: ReactNode;
 }>;
-export default async function Header({ productNav }: HeaderProps) {
+export default async function Header({ productNav, productCart }: HeaderProps) {
   return (
     <div className="flex justify-between items-center">
       <HeaderLogo />
       {productNav}
-      <div>Control</div>
+      {productCart}
     </div>
   );
 }
