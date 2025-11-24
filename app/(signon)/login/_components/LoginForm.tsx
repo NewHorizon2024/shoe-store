@@ -31,6 +31,12 @@ export default function LoginForm() {
   const { data, status } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status]);
+
   const { mutateAsync: googleMutate } = useMutation({
     mutationKey: ["GOOGLE_USER"],
     mutationFn: async (payload: {
@@ -54,18 +60,17 @@ export default function LoginForm() {
   useEffect(() => {
     if (
       status === "authenticated" &&
-      data?.user &&
-      data.user.name &&
-      data.user.email &&
-      data.accessToken
+      data?.user?.name &&
+      data?.user?.email &&
+      data?.accessToken
     ) {
       googleMutate({
-        name: data.user?.name,
-        email: data?.user.email,
+        name: data.user.name,
+        email: data.user.email,
         token: data.accessToken,
       }).then(() => router.push("/"));
     }
-  }, [status]);
+  }, [status, data]);
 
   const {
     register,
@@ -112,10 +117,10 @@ export default function LoginForm() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center w-full max-w-md mx-auto">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full max-w-md mx-auto"
+        className="flex flex-col gap-4 w-full"
       >
         <div>
           <Input
@@ -158,7 +163,7 @@ export default function LoginForm() {
         className="cursor-pointer w-full mt-4"
         onClick={() => signIn("google")}
       >
-        Sign in with google
+        Sign in with Google
       </Button>
     </div>
   );

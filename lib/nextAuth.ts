@@ -11,14 +11,12 @@ export const authOptions: AuthOptions = {
   secret: process.env.AUTH_SECRET,
   callbacks: {
     async jwt({ token, account }) {
-      // When user signs in, persist the access_token
       if (account) {
         token.accessToken = account.access_token;
       }
       return token;
     },
     async session({ session, token }) {
-      // Expose the access_token to the client
       session.accessToken = token.accessToken as string;
       return session;
     },
