@@ -39,7 +39,6 @@ export default function LoginForm() {
       const result = response.data as LoginResponse;
       return result;
     },
-    onSuccess: () => router.push("/")
   });
 
   function onSubmit(data: LoginForm) {
@@ -59,6 +58,7 @@ export default function LoginForm() {
           }, 1000);
         }
         router.replace("/");
+        router.push("/");
       })
       .catch((error) => {
         console.error(error);
