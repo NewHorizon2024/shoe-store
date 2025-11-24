@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { UPDATE_CART } from "@/app/api/routes";
+import { DELETE_PRODUCT, UPDATE_CART } from "@/app/api/routes";
 import { CartPayLoad } from "@/models/models";
 import { IconMinus, IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import clsx from "clsx";
 import { getCookie } from "cookies-next";
 import { toast } from "react-toastify";
 
@@ -23,7 +25,6 @@ export default function Quantity({
   cartQuantity,
   productId,
 }: QuantityProps) {
-  useEffect(() => console.log("ors", productId), [productId]);
   const [currentQuantity, setCurrentQuantity] = useState<number>(cartQuantity);
   const userId = Number(getCookie("userId"));
   const { refetch } = useCartData(userId);
@@ -34,6 +35,19 @@ export default function Quantity({
       payload: CartPayLoad;
     }) => {
       const response = await axios.post(UPDATE_CART, payload);
+      return response.data;
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Failed to update cart, try again later!");
+    },
+    onSuccess: () => refetch(),
+  });
+
+  const { mutate: mutateDelete, isPending } = useMutation({
+    mutationKey: ["DELETE_PRODUCT", productId],
+    mutationFn: async (productId: number) => {
+      const response = await axios.post(DELETE_PRODUCT, { productId });
       return response.data;
     },
     onError: (error) => {
@@ -58,11 +72,16 @@ export default function Quantity({
       });
     }
   }
+
   return (
     <div className="flex gap-2 rounded-lg justify-evenly items-center mt-10 border-1 border-zinc-500">
       {currentQuantity === 1 && (
-        <Button variant="ghost" className="cursor-pointer">
-          <IconTrash />
+        <Button
+          onClick={() => mutateDelete(productId)}
+          variant="ghost"
+          className={clsx("cursor-pointer")}
+        >
+          {isPending ? <IconLoader2 className={clsx(isPending && "rotate-icon")} /> : <IconTrash />}
         </Button>
       )}
       {currentQuantity > 1 && (

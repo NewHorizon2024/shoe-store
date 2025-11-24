@@ -17,6 +17,7 @@ export default function CartPage() {
       <div className="w-full max-w-5xl flex md:flex-row md:space-x-8">
         <div className="flex-1 flex flex-col gap-4 rounded p-4 min-w-[60%]">
           <h3>Shopping basket</h3>
+          {!data?.cart.length && <p className="text-zinc-700 nunito-bold font-bold">There are no products in the cart.</p>}
           <ul className="divide-y divide-gray-200">
             {data?.cart?.map(({ id, product_id, quantity }) => (
               <li key={id} className="py-3">

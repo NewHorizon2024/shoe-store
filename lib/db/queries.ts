@@ -50,3 +50,8 @@ SELECT id, quantity, image_url, title, price
 FROM products 
 WHERE id = $1;
 `;
+
+export const deleteProduct = `
+DELETE FROM public.cart_items
+WHERE product_id = $1;
+`;

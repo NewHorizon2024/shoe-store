@@ -3,3 +3,4 @@ export const GET_PRODUCT_DETAILS = "/api/get-product";
 export const UPDATE_CART = "/api/update-cart";
 export const GET_CART = "/api/get-cart";
 export const GET_PRODUCT_DETAILS_BY_ID = "/api/get-product-details"
+export const DELETE_PRODUCT = "/api/delete-product";
