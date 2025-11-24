@@ -11,7 +11,7 @@ export default function Home() {
     queryKey: ["LIST_PRODUCTS"],
     queryFn: async () => {
       const result = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/get-list-products`,
+        `/api/get-list-products`,
       );
       const response = result.data as { products: Product[] };
       return response;

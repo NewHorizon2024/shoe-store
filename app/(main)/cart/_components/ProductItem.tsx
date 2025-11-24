@@ -20,7 +20,7 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
     queryKey: ["PRODUCT_DETAILS", productId],
     queryFn: async () => {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}${GET_PRODUCT_DETAILS_BY_ID}?productId=${productId}`,
+        `${GET_PRODUCT_DETAILS_BY_ID}?productId=${productId}`,
       );
       return response.data;
     },
