@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
 
     cookieStore.set("token", token);
     cookieStore.set("userId", user.id);
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.redirect(new URL("/", request.url));
   } catch (error) {
     console.error(error);
     return NextResponse.json(
