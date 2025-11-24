@@ -5,3 +5,7 @@ export const pageview = (url: string) => {
     page_path: url,
   });
 };
+
+export const event = (action: string, params: Record<string, unknown>) => {
+  window.gtag("event", action, params);
+};

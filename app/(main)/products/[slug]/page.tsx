@@ -8,6 +8,8 @@ import axios from "axios";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
+import VideoTracker from "@/lib/google-analytics/VideoTracker";
+
 import ProductPrice from "../../_components/ProductPrice";
 import AddToCart from "./_components/AddToCart";
 
@@ -53,12 +55,14 @@ export default function Slug() {
       </div>
 
       <iframe
+        id="product-youtube"
         className="w-full min-h-[500px] mt-6"
         src={`${data?.video_url}?controls=1`}
         title="YouTube video banner"
         allow="autoplay; encrypted-media"
         allowFullScreen
       ></iframe>
+      <VideoTracker videoId="product-youtube" />
     </div>
   );
 }
