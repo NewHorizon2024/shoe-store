@@ -104,10 +104,7 @@ export default function LoginForm() {
         }
 
         if (response.id) {
-          toast.success("Login successful!");
-          setTimeout(() => {
-            router.push("/");
-          }, 1000);
+          router.push("/");
         }
       })
       .catch((error) => {
