@@ -54,11 +54,13 @@ export default function LoginForm() {
         }
 
         if (response.success && response.token) {
+          console.log("response.success", response.success)
           toast.success("Login successful!");
           setTimeout(() => {
             router.push("/");
           }, 1000);
         }
+        console.log("REACH HERE")
       })
       .catch((error) => {
         console.error(error);
