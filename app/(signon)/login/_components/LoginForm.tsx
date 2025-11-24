@@ -87,6 +87,10 @@ export default function LoginForm() {
       const result = response.data as LoginResponse;
       return result;
     },
+    onSuccess: () => {
+      router.push("/")
+      console.log("success")
+    }
   });
 
   function onSubmit(data: LoginForm) {
@@ -105,6 +109,7 @@ export default function LoginForm() {
 
         if (response.id) {
           router.push("/");
+           console.log("response", response)
         }
       })
       .catch((error) => {
