@@ -39,13 +39,12 @@ SET quantity = quantity - 1
 WHERE cart_id = $1 AND product_id = $2;
 `;
 
-
 export const getUserCartItems = `
 SELECT * FROM public.cart_items
 WHERE cart_id = $1;
 `;
 
-export const getProductDetailsFromItems =`
+export const getProductDetailsFromItems = `
 SELECT id, quantity, image_url, title, price 
 FROM products 
 WHERE id = $1;
@@ -54,4 +53,10 @@ WHERE id = $1;
 export const deleteProduct = `
 DELETE FROM public.cart_items
 WHERE product_id = $1;
+`;
+
+export const getcartProductsIs = `
+SELECT *
+FROM public.products
+WHERE id = ANY($1::int[]);
 `;

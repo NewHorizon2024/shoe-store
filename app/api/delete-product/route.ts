@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
   try {
     const payload = await request.json();
     const { productId } = payload as { productId: number };
-    console.log( productId)
 
     const result = await pool.query(deleteProduct, [productId]);
     return NextResponse.json(result, { status: 201 });
