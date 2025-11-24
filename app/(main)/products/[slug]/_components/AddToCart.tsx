@@ -37,7 +37,7 @@ export default function AddToCart({ productId }: AddToCartProps) {
         payload: { userId, productId, quantity: 1 },
       });
       toast.success("Your cart has been updated successfully!");
-      refetch();
+      await refetch();
     } catch (error) {
       console.error(error);
       toast.error("Oops! We couldn’t update your cart. Please try again.");

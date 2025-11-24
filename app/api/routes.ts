@@ -5,3 +5,4 @@ export const GET_CART = "/api/get-cart";
 export const GET_PRODUCT_DETAILS_BY_ID = "/api/get-product-details"
 export const DELETE_PRODUCT = "/api/delete-product";
 export const GET_ALL_PRODUCT_IDS = "/api/get-cart-products-id";
+export const DELETE_USER_CART = '/api/delete-user-cart'

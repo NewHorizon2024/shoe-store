@@ -24,6 +24,7 @@ export default function CartPage() {
     },
     enabled: !!productIds?.length,
   });
+
   const total = data?.cart.reduce((sum, cartItem) => {
     const product = productsId?.find(
       (p: { id: number }) => p.id === cartItem.product_id,
@@ -48,7 +49,11 @@ export default function CartPage() {
           <ul className="divide-y divide-gray-200">
             {data?.cart?.map(({ id, product_id, quantity }) => (
               <li key={id} className="py-3">
-                <ProductItem productId={product_id} quantity={quantity} />
+                <ProductItem
+                  productId={product_id}
+                  quantity={quantity}
+                  isDisabled={false}
+                />
               </li>
             ))}
           </ul>

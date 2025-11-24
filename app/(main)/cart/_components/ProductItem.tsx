@@ -13,9 +13,10 @@ import Quantity from "./Quantity";
 type ProductItemProps = Readonly<{
   productId: number;
   quantity: number;
+  isDisabled: boolean
 }>;
 
-export default function ProductItem({ productId, quantity }: ProductItemProps) {
+export default function ProductItem({ productId, quantity, isDisabled }: ProductItemProps) {
   const { data, isFetching } = useQuery({
     queryKey: ["PRODUCT_DETAILS", productId],
     queryFn: async () => {
@@ -29,7 +30,6 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
 
   return (
     <div className="flex flex-col md:flex-row justify-between mt-10 min-w-[50%] md:items-start md:gap-8">
-      {/* Left side: image + details */}
       <div className="flex gap-4">
         <div>
           <Image
@@ -42,6 +42,7 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
             quantity={data?.quantity}
             cartQuantity={quantity}
             productId={productId}
+            isDisabled={isDisabled}
           />
         </div>
         <div className="flex flex-col">
@@ -55,7 +56,6 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
         </div>
       </div>
 
-      {/* Right side: price */}
       <div className="mt-6 md:mt-0">
         <ProductPrice price={data?.price} />
         <p className="text-zinc-500 font-bold">Lowest price</p>

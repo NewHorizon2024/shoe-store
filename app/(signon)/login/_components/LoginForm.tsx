@@ -39,6 +39,7 @@ export default function LoginForm() {
       const result = response.data as LoginResponse;
       return result;
     },
+    onSuccess: () => router.push("/")
   });
 
   function onSubmit(data: LoginForm) {
@@ -57,12 +58,13 @@ export default function LoginForm() {
             router.push("/");
           }, 1000);
         }
-         router.replace("/");
+        router.replace("/");
       })
       .catch((error) => {
         console.error(error);
         toast.error("Login Failed, please try again later!");
-      }).finally(() =>  router.replace("/"))
+      })
+      .finally(() => router.replace("/"));
   }
 
   return (

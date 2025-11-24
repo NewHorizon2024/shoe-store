@@ -21,7 +21,8 @@ RETURNING id;
 export const getProductFromCartItems = `
 SELECT id, quantity 
 FROM cart_items 
-WHERE cart_id = $1 AND product_id = $2;
+WHERE cart_id = $1 AND product_id = $2
+ORDER BY id ASC;
 `;
 
 export const updateUSerCartItems = `INSERT INTO cart_items (cart_id, product_id, quantity)
@@ -41,13 +42,15 @@ WHERE cart_id = $1 AND product_id = $2;
 
 export const getUserCartItems = `
 SELECT * FROM public.cart_items
-WHERE cart_id = $1;
+WHERE cart_id = $1
+ORDER BY id ASC;
 `;
 
 export const getProductDetailsFromItems = `
 SELECT id, quantity, image_url, title, price 
 FROM products 
-WHERE id = $1;
+WHERE id = $1
+ORDER BY id ASC
 `;
 
 export const deleteProduct = `
@@ -59,4 +62,9 @@ export const getcartProductsIs = `
 SELECT *
 FROM public.products
 WHERE id = ANY($1::int[]);
+`;
+
+export const deleteUserCart = `
+DELETE FROM public.carts
+WHERE user_id = $1;
 `;
