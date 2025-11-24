@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconLoader2 } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -29,7 +29,7 @@ export default function LoginForm() {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-
+  const router = useRouter();
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["LOGIN_USER"],
     mutationFn: async (payload: LoginForm) => {
@@ -42,23 +42,28 @@ export default function LoginForm() {
   function onSubmit(data: LoginForm) {
     mutateAsync(data)
       .then((response) => {
-        if (response.error && response.reason === "User Not Found") {
-          toast.error("We couldn’t find an account with that email.");
+        if (response.error) {
+          if (response.reason === "User Not Found") {
+            toast.error("We couldn’t find an account with that email.");
+          } else if (response.reason === "Invalid credentials") {
+            toast.error("The email or password you entered is incorrect.");
+          } else {
+            toast.error("Login failed, please try again later!");
+          }
+          return;
         }
-        if (response.error && response.reason === "Invalid credentials") {
-          toast.error("The email or password you entered is incorrect.");
-        }
+
         if (response.success && response.token) {
+          toast.success("Login successful!");
           setTimeout(() => {
-            redirect("/");
+            router.push("/");
           }, 1000);
         }
       })
       .catch((error) => {
         console.error(error);
-        toast.error("Login Failed, please try again later!");
-      })
-      .finally(() => redirect("/"));
+        toast.error("Unexpected error, please try again later!");
+      });
   }
 
   return (
