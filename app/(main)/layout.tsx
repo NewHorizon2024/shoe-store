@@ -2,6 +2,7 @@ import Container from "@/layouts/Container";
 import HeaderLayout from "@/layouts/HeaderLayout";
 import MacroLayout from "@/layouts/MacroLayout";
 import SectionLayout from "@/layouts/SectionLayout";
+import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
@@ -35,20 +36,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-QWXZ0HN734"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-QWXZ0HN734');
-          `}
-        </Script>
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -65,6 +52,7 @@ export default function RootLayout({
         </Container>
         <AnalyticsProvider />
       </body>
+      <GoogleTagManager gtmId="G-QWXZ0HN734" />
     </html>
   );
 }
