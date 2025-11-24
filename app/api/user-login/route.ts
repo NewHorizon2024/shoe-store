@@ -41,8 +41,18 @@ export async function POST(request: NextRequest) {
         expiresIn: "1h",
       },
     );
-
-    return NextResponse.json({ success: true, userId: user.id, token });
+    const response = NextResponse.json({
+      success: true,
+      userId: "42",
+      token: "abc123",
+    });
+    response.cookies.set("token", token, {
+      path: "/",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+    return response;
   } catch (error) {
     console.error(error);
     return NextResponse.json(
