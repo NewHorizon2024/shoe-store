@@ -1,17 +1,17 @@
 "use client";
 
-import { useDeleteCookie } from "cookies-next";
+import { deleteCookie } from "@/actions/deleteCookies";
+import { IconLogout } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import {IconLogout} from '@tabler/icons-react'
+
 import { Button } from "@/components/ui/button";
 
 export default function MainNav() {
-  const deleteCookie = useDeleteCookie();
   const router = useRouter();
 
-  function handleLogout() {
+  async function handleLogout() {
     try {
-      deleteCookie("token");
+      await deleteCookie();
       setTimeout(() => router.push("/login"), 0);
     } catch (error) {
       console.error(error);

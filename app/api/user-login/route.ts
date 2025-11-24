@@ -1,11 +1,13 @@
 import type { LoginForm } from "@/models/models";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 
 import pool from "@/lib/db/db-config";
 
 export async function POST(request: NextRequest) {
+  const cookieStore = await cookies();
   const payload = await request.json();
   const { email, password } = payload as LoginForm;
 
@@ -41,18 +43,10 @@ export async function POST(request: NextRequest) {
         expiresIn: "1h",
       },
     );
-    const response = NextResponse.json({
-      success: true,
-      userId: "42",
-      token: "abc123",
-    });
-    response.cookies.set("token", token, {
-      path: "/",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    });
-    return response;
+
+    cookieStore.set("token", token);
+    cookieStore.set("userId", user.id);
+    return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

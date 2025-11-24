@@ -63,6 +63,7 @@ export default function RootLayout({
             </main>
           </MacroLayout>
         </Container>
+
         <AnalyticsProvider />
       </body>
       <GoogleTagManager gtmId="G-QWXZ0HN734" />
