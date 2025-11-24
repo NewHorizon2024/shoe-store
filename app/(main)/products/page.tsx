@@ -2,14 +2,12 @@
 
 import type { Product } from "@/models/models";
 
-import pool from "@/lib/db/db-config";
-import { getAllProducts } from "@/lib/db/queries";
-
 import ProductCard from "../_components/ProductCard";
 
 async function getProducts(): Promise<{ products: Product[] }> {
-  const products = await pool.query(getAllProducts);
-  return { products: products.rows };
+  const data = await fetch("/get-list-products");
+  const response = await data.json();
+  return { products: response };
 }
 
 export default async function Home() {
