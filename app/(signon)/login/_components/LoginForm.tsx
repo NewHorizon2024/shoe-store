@@ -13,7 +13,7 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-//LOGIN
+
 const schema = z.object({
   email: z.string().email("Please enter a valid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -53,14 +53,12 @@ export default function LoginForm() {
           return;
         }
 
-        if (response.success && response.token) {
-          console.log("response.success", response.success)
+        if (response.id) {
           toast.success("Login successful!");
           setTimeout(() => {
             router.push("/");
           }, 1000);
         }
-        console.log("REACH HERE", response)
       })
       .catch((error) => {
         console.error(error);

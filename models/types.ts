@@ -6,7 +6,6 @@ export type SignupResponse = Readonly<{
 
 export type LoginResponse = Pick<SignupResponse, "error" | "reason"> &
   Readonly<{
-    success: boolean;
-    userId: number;
-    token?: string;
+    id: number;
+    password: string;
   }>;
