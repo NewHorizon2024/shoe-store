@@ -1,8 +1,8 @@
-"use server";
+"use client";
 
 import Link from "next/link";
 
-export default async function Banner() {
+export default  function Banner() {
   return (
     <div className="relative w-full h-[600px] overflow-hidden rounded-md">
       <iframe
