@@ -28,8 +28,9 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
   });
 
   return (
-    <div className="flex justify-between mt-10">
-      <div className="flex gap-2">
+    <div className="flex flex-col md:flex-row justify-between mt-10 min-w-[50%] md:items-start md:gap-8">
+      {/* Left side: image + details */}
+      <div className="flex gap-4">
         <div>
           <Image
             alt="image"
@@ -37,7 +38,11 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
             height={150}
             src={isFetching ? placeholder : data?.image_url}
           />
-          <Quantity quantity={data?.quantity} cartQuantity= {quantity} productId={productId} />
+          <Quantity
+            quantity={data?.quantity}
+            cartQuantity={quantity}
+            productId={productId}
+          />
         </div>
         <div className="flex flex-col">
           <Link
@@ -50,7 +55,8 @@ export default function ProductItem({ productId, quantity }: ProductItemProps) {
         </div>
       </div>
 
-      <div>
+      {/* Right side: price */}
+      <div className="mt-6 md:mt-0">
         <ProductPrice price={data?.price} />
         <p className="text-zinc-500 font-bold">Lowest price</p>
       </div>
